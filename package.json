@@ -8,6 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@glif/filecoin-address": "^1.1.0-beta.18",
+    "@zondax/filecoin-signing-tools": "^0.13.0",
+    "bip39": "^3.0.3",
+    "bls-eth-wasm": "^0.4.8",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
