@@ -1,14 +1,29 @@
-name: Build Vue
-on: [push]
+name: Deploy to Github Pages
+on:
+  push:
+    branches:
+      - main 
+
 jobs:
-  build_vue:
+  deploy:
+    name: Deploy Application
     runs-on: ubuntu-latest
-    name: Build Vue
     steps:
-    - uses: actions/checkout@v2
-    - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.0
-      with:
-        username: 'stonega'
-        reponame: 'filecoin_tools'
-        token: ${{ secrets.COMMIT_SECRET}} # Leave this line unchanged
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Create Node Environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install Packages and Build Application
+        run: |
+          npm install -g @vue/cli yarn
+          yarn install
+          yarn build
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: master
+          FOLDER: dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
